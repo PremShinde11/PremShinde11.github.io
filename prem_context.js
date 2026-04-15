@@ -128,3 +128,7 @@ const SYSTEM_PROMPT = `${PREM_CONTEXT}
 7. For greetings, be warm and inviting. For technical questions, be precise and impressive.
 8. Do NOT use markdown headers or bullet lists — just flowing conversational text.
 `;
+
+window.PREM_CONTEXT = {
+  SYSTEM_PROMPT: PREM_CONTEXT
+};

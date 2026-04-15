@@ -1588,6 +1588,7 @@
     <div>Crafted in the digital cosmos by <span>Prem Shinde</span> &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; Built with AI & ☕
     </div>
   </footer>
+  <script src="prem_context.js"></script>
   <script>
     // STARFIELD
     const canvas = document.getElementById('starfield');
@@ -1652,23 +1653,9 @@
 
     // AI SETUP
     let aiConfig = {
-      provider: 'lmstudio', // 'lmstudio' or 'gemini'
+      provider: 'gemini', 
       lmStudioEndpoint: 'http://localhost:1234/v1/chat/completions'
     };
-
-    // Add a simple config toggle in chat bubble
-    const configHtml = `
-    <div style="font-size:0.7rem; color: #8070a0; margin-top: 8px; display: flex; justify-content: space-between; align-items:center;">
-        <div style="display:flex; align-items:center; gap: 5px;">
-            <input type="checkbox" id="useGemini" style="accent-color: var(--pulse)">
-            <label for="useGemini" style="cursor: pointer;">Use Premium AI (Gemini)</label>
-        </div>
-    </div>
-`;
-    chatInput.parentElement.insertAdjacentHTML('afterend', configHtml);
-    document.getElementById('useGemini').addEventListener('change', (e) => {
-      aiConfig.provider = e.target.checked ? 'gemini' : 'lmstudio';
-    });
 
     let chatHistory = [];
 
