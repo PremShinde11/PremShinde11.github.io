@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expressive AI Blob</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        /* --- THE BLOB CONTAINER --- */
+        .ai-blob {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at 30% 30%, #b388ff, #7c4dff, #4527a0);
+            box-shadow:
+                inset 15px 15px 30px rgba(255, 255, 255, 0.4),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(124, 77, 255, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: filter 0.5s ease;
+            /* For sleeping dim effect */
+            animation: morph 5s ease-in-out infinite, float 4s ease-in-out infinite;
+        }
+
+        .ai-blob::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            background: repeating-linear-gradient(to bottom,
+                    transparent, transparent 2px,
+                    rgba(255, 255, 255, 0.05) 2px, rgba(255, 255, 255, 0.05) 4px);
+            pointer-events: none;
+        }
+
+        /* --- THE EYES (Base State) --- */
+        .eyes {
+            display: flex;
+            gap: 22px;
+            transform: translateY(-5px);
+            z-index: 2;
+            align-items: center;
+            /* Keeps them centered when height changes */
+        }
+
+        .eye {
+            width: 14px;
+            height: 24px;
+            background-color: #ffffff;
+            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+            box-shadow: 0 0 8px #ffffff, 0 0 20px #e040fb;
+            transform-origin: center;
+            /* Smooth transition between all expressions */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- EXPRESSIONS --- */
+
+        /* 1. Idle (Default Blinking) */
+        .ai-blob.is-idle .eye {
+            animation: blink 4s infinite;
+        }
+
+        /* 2. Happy (Smiling semi-circles) */
+        .ai-blob.is-happy .eye {
+            height: 12px;
+            width: 20px;
+            /* Flat bottom, round top to look like a happy squint */
+            border-radius: 50px 50px 0 0;
+            margin-top: 5px;
+            /* Push down slightly */
+            animation: none;
+            /* Pause blinking */
+        }
+
+        /* 3. Thinking (Bouncing dots) */
+        .ai-blob.is-thinking .eye {
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            animation: think-bounce 0.8s infinite alternate ease-in-out;
+        }
+
+        /* Delay the second eye to create a wave effect */
+        .ai-blob.is-thinking .eye:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        /* 4. Surprised/Listening (Wide open) */
+        .ai-blob.is-surprised .eye {
+            height: 26px;
+            width: 24px;
+            border-radius: 50%;
+            /* Perfect circles */
+            animation: none;
+        }
+
+        /* 5. Sleeping (Flat lines + slower breathing) */
+        .ai-blob.is-sleeping {
+            filter: brightness(0.7);
+            /* Dim the blob */
+            animation: morph 8s ease-in-out infinite, float 6s ease-in-out infinite;
+            /* Slow down */
+        }
+
+        .ai-blob.is-sleeping .eye {
+            height: 4px;
+            width: 18px;
+            border-radius: 4px;
+            margin-top: 10px;
+            animation: none;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes morph {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes blink {
+
+            0%,
+            95%,
+            98% {
+                transform: scaleY(1);
+            }
+
+            96%,
+            97% {
+                transform: scaleY(0.1);
+            }
+
+            100% {
+                transform: scaleY(1);
+            }
+        }
+
+        @keyframes think-bounce {
+            0% {
+                transform: translateY(5px);
+            }
+
+            100% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* --- UI FOR TESTING (You can delete this part in your real app) --- */
+        .controls {
+            margin-top: 50px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        button.active {
+            background: #e040fb;
+            color: #1a1a2e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- The Blob -->
+    <div class="ai-blob is-idle" id="blob">
+        <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+        </div>
+    </div>
+
+    <!-- Buttons to test expressions -->
+    <div class="controls">
+        <button class="active" onclick="setExpression('is-idle', this)">Idle</button>
+        <button onclick="setExpression('is-happy', this)">Smile</button>
+        <button onclick="setExpression('is-thinking', this)">Thinking</button>
+        <button onclick="setExpression('is-surprised', this)">Surprised</button>
+        <button onclick="setExpression('is-sleeping', this)">Sleep</button>
+    </div>
+
+    <script>
+        function setExpression(expressionClass, btnElement) {
+            const blob = document.getElementById('blob');
+
+            // Remove all current expression classes
+            blob.classList.remove('is-idle', 'is-happy', 'is-thinking', 'is-surprised', 'is-sleeping');
+
+            // Add the new expression class
+            blob.classList.add(expressionClass);
+
+            // Update button UI (just for testing purposes)
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>
