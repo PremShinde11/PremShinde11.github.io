@@ -1653,7 +1653,6 @@
     // AI SETUP
     let aiConfig = {
       provider: 'lmstudio', // 'lmstudio' or 'gemini'
-      geminiApiKey: '', // Optional: if provided, we can switch
       lmStudioEndpoint: 'http://localhost:1234/v1/chat/completions'
     };
 
@@ -1662,18 +1661,13 @@
     <div style="font-size:0.7rem; color: #8070a0; margin-top: 8px; display: flex; justify-content: space-between; align-items:center;">
         <div style="display:flex; align-items:center; gap: 5px;">
             <input type="checkbox" id="useGemini" style="accent-color: var(--pulse)">
-            <label for="useGemini" style="cursor: pointer;">Use Gemini (Needs Key)</label>
+            <label for="useGemini" style="cursor: pointer;">Use Premium AI (Gemini)</label>
         </div>
     </div>
 `;
     chatInput.parentElement.insertAdjacentHTML('afterend', configHtml);
     document.getElementById('useGemini').addEventListener('change', (e) => {
       aiConfig.provider = e.target.checked ? 'gemini' : 'lmstudio';
-      if (e.target.checked && !aiConfig.geminiApiKey) {
-        let key = prompt("Enter Gemini API Key:");
-        if (key) aiConfig.geminiApiKey = key;
-        else { e.target.checked = false; aiConfig.provider = 'lmstudio'; }
-      }
     });
 
     let chatHistory = [];
@@ -1731,42 +1725,38 @@
           if (data.choices && data.choices[0] && data.choices[0].message) {
             return data.choices[0].message.content;
           }
-          return "LM Studio API error or no response. Ensure it's running on localhost:1234. Or check the Gemini box!";
+          return "LM Studio API error. Ensure it's running locally on port 1234, or switch to Premium AI!";
         } else {
-          // Gemini API
-          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${aiConfig.geminiApiKey}`;
-          // transform messages for gemini
-          const geminiContents = [
-            { role: "user", parts: [{ text: "System prompt: " + window.PREM_CONTEXT.SYSTEM_PROMPT }] },
-            { role: "model", parts: [{ text: "Understood. I am Prem's digital twin." }] }
-          ];
-          for (const h of chatHistory) {
-            geminiContents.push({
-              role: h.role === "assistant" ? "model" : "user",
-              parts: [{ text: h.content }]
+            // VERCEL SECURE PROXY
+            const geminiContents = [
+                { role: "user", parts: [{ text: "System prompt: " + window.PREM_CONTEXT.SYSTEM_PROMPT }] },
+                { role: "model", parts: [{ text: "Understood. I am Prem's digital twin." }] }
+            ];
+            for (const h of chatHistory) {
+                geminiContents.push({
+                    role: h.role === "assistant" ? "model" : "user",
+                    parts: [{ text: h.content }]
+                });
+            }
+            geminiContents.push({ role: "user", parts: [{ text: msg }] });
+            
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: geminiContents })
             });
-          }
-          geminiContents.push({ role: "user", parts: [{ text: msg }] });
 
-          const res = await fetch(geminiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: geminiContents,
-              generationConfig: { temperature: 0.7, maxOutputTokens: 300 }
-            })
-          });
-          const data = await res.json();
-          if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            return data.candidates[0].content.parts[0].text;
-          } else if (data.error) {
-            return "Gemini API Error: " + data.error.message;
-          }
-          return "Gemini API failed to respond.";
+            const data = await res.json();
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                return data.candidates[0].content.parts[0].text;
+            } else if (data.error) {
+                return "AI Error: " + (data.error.message || "Backend connection issue.");
+            }
+            return "The digital twin is currently recharging (Empty response). Try again!";
         }
       } catch (err) {
         console.error(err);
-        return "Connection failed. Please ensure LM Studio is running on localhost:1234 or your Gemini key is correct. Note: " + err.message;
+        return "Connection failed. Note: " + err.message;
       }
     }
 
