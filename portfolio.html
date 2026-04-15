@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prem Shinde — AI Engineer & Researcher</title>
-  <link rel="icon" type="image/png" href="favicon.png">
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@300;400;600;700&display=swap"
     rel="stylesheet">
@@ -1077,69 +1076,32 @@
       transition: width 1.2s ease;
     }
 
-    .contact-form {
+    .skill-item {
       display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .form-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--glow);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .form-input,
-    .form-textarea {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
+    .skill-name {
+      font-size: 0.9rem;
       color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      outline: none;
-      transition: all 0.3s;
     }
 
-    .form-input:focus,
-    .form-textarea:focus {
-      border-color: var(--glow);
-      background: rgba(155, 109, 255, 0.05);
-      box-shadow: 0 0 15px rgba(155, 109, 255, 0.1);
+    .skill-category {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
     }
 
-    .form-textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .btn-submit {
-      padding: 1rem;
-      background: linear-gradient(135deg, var(--pulse), var(--glow));
-      color: white;
-      border: none;
-      border-radius: 8px;
+    .skill-category h3 {
       font-family: 'Orbitron', monospace;
       font-size: 0.8rem;
+      color: var(--glow);
       letter-spacing: 2px;
+      margin-bottom: 1rem;
       text-transform: uppercase;
-      cursor: none;
-      transition: all 0.3s;
-      margin-top: 0.5rem;
-    }
-
-    .btn-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(108, 63, 212, 0.3);
     }
 
     @media(max-width:768px) {
@@ -1205,7 +1167,7 @@
     </div>
   </div>
   <nav>
-    <div class="nav-logo">PS // 2026</div>
+    <div class="nav-logo">PS // 2025</div>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -1222,7 +1184,7 @@
     <div class="hero-content">
       <div class="hero-tag">// M.Sc. Computer Science · University of Siegen · Germany</div>
       <h1 class="hero-name">PREM SHINDE</h1>
-      <div class="hero-sub">ML Researcher &nbsp;·&nbsp; Embedded Systems</div>
+      <div class="hero-sub"> ML Researcher &nbsp;·&nbsp; Embedded Systems</div>
       <p class="hero-desc">Building intelligent systems at the intersection of <strong style="color:var(--bright)">deep
           learning</strong>, <strong style="color:var(--cyan)">GenAI</strong>, and <strong
           style="color:#ff3dbb)">trustworthy AI</strong>. From gamma-ray imaging to cognitive reinforcement learning —
@@ -1551,35 +1513,33 @@
           </div>
         </div>
         <div class="contact-panel reveal">
-          <h3>// Send Message</h3>
-          <form class="contact-form" id="contact-form">
-            <div class="form-group">
-              <label class="form-label" for="name">Name</label>
-              <input type="text" id="name" name="name" class="form-input" placeholder="Your Name" required>
-              <div id="name-error" class="error-message"
-                style="color:var(--pink);font-size:0.75rem;margin-top:0.2rem;display:none;"></div>
+          <h3>// Quick Facts</h3>
+          <div style="display:flex;flex-direction:column;gap:0.8rem;">
+            <div
+              style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:0.8rem;">
+              <span style="color:var(--muted);font-size:0.85rem;">Location</span><span
+                style="color:var(--bright);font-size:0.85rem;font-family:'Space Mono',monospace;">Siegen, Germany</span>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="email">Email</label>
-              <input type="email" id="email" name="email" class="form-input" placeholder="Your Email" required>
-              <div id="email-error" class="error-message"
-                style="color:var(--pink);font-size:0.75rem;margin-top:0.2rem;display:none;"></div>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="subject">Subject</label>
-              <input type="text" id="subject" name="subject" class="form-input" placeholder="Subject" required>
-              <div id="subject-error" class="error-message"
-                style="color:var(--pink);font-size:0.75rem;margin-top:0.2rem;display:none;"></div>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="message">Message</label>
-              <textarea id="message" name="message" class="form-textarea" placeholder="Your Message..."
-                required></textarea>
-              <div id="message-error" class="error-message"
-                style="color:var(--pink);font-size:0.75rem;margin-top:0.2rem;display:none;"></div>
-            </div>
-            <button type="submit" class="btn-submit" id="submitBtn">Transmit Message //</button>
-          </form>
+            <div
+              style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:0.8rem;">
+              <span style="color:var(--muted);font-size:0.85rem;">Education</span><span
+                style="color:var(--bright);font-size:0.85rem;font-family:'Space Mono',monospace;">M.Sc. CS
+                (ongoing)</span></div>
+            <div
+              style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:0.8rem;">
+              <span style="color:var(--muted);font-size:0.85rem;">Languages</span><span
+                style="color:var(--bright);font-size:0.85rem;font-family:'Space Mono',monospace;">EN C2 · DE B2 ·
+                HI/MR</span></div>
+            <div
+              style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:0.8rem;">
+              <span style="color:var(--muted);font-size:0.85rem;">Status</span><span
+                style="color:#00ff88;font-size:0.85rem;font-family:'Space Mono',monospace;">● Open to
+                Opportunities</span></div>
+            <div style="display:flex;justify-content:space-between;"><span
+                style="color:var(--muted);font-size:0.85rem;">Interests</span><span
+                style="color:var(--bright);font-size:0.85rem;font-family:'Space Mono',monospace;">AI · Chess · Martial
+                Arts</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1589,7 +1549,6 @@
     <div>Crafted in the digital cosmos by <span>Prem Shinde</span> &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; Built with AI & ☕
     </div>
   </footer>
-  <script src="prem_context.js"></script>
   <script>
     // STARFIELD
     const canvas = document.getElementById('starfield');
@@ -1654,9 +1613,29 @@
 
     // AI SETUP
     let aiConfig = {
-      provider: 'gemini', 
+      provider: 'lmstudio', // 'lmstudio' or 'gemini'
+      geminiApiKey: '', // Optional: if provided, we can switch
       lmStudioEndpoint: 'http://localhost:1234/v1/chat/completions'
     };
+
+    // Add a simple config toggle in chat bubble
+    const configHtml = `
+    <div style="font-size:0.7rem; color: #8070a0; margin-top: 8px; display: flex; justify-content: space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap: 5px;">
+            <input type="checkbox" id="useGemini" style="accent-color: var(--pulse)">
+            <label for="useGemini" style="cursor: pointer;">Use Gemini (Needs Key)</label>
+        </div>
+    </div>
+`;
+    chatInput.parentElement.insertAdjacentHTML('afterend', configHtml);
+    document.getElementById('useGemini').addEventListener('change', (e) => {
+      aiConfig.provider = e.target.checked ? 'gemini' : 'lmstudio';
+      if (e.target.checked && !aiConfig.geminiApiKey) {
+        let key = prompt("Enter Gemini API Key:");
+        if (key) aiConfig.geminiApiKey = key;
+        else { e.target.checked = false; aiConfig.provider = 'lmstudio'; }
+      }
+    });
 
     let chatHistory = [];
 
@@ -1713,38 +1692,42 @@
           if (data.choices && data.choices[0] && data.choices[0].message) {
             return data.choices[0].message.content;
           }
-          return "LM Studio API error. Ensure it's running locally on port 1234, or switch to Premium AI!";
+          return "LM Studio API error or no response. Ensure it's running on localhost:1234. Or check the Gemini box!";
         } else {
-            // VERCEL SECURE PROXY
-            const geminiContents = [
-                { role: "user", parts: [{ text: "System prompt: " + window.PREM_CONTEXT.SYSTEM_PROMPT }] },
-                { role: "model", parts: [{ text: "Understood. I am Prem's digital twin." }] }
-            ];
-            for (const h of chatHistory) {
-                geminiContents.push({
-                    role: h.role === "assistant" ? "model" : "user",
-                    parts: [{ text: h.content }]
-                });
-            }
-            geminiContents.push({ role: "user", parts: [{ text: msg }] });
-            
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: geminiContents })
+          // Gemini API
+          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${aiConfig.geminiApiKey}`;
+          // transform messages for gemini
+          const geminiContents = [
+            { role: "user", parts: [{ text: "System prompt: " + window.PREM_CONTEXT.SYSTEM_PROMPT }] },
+            { role: "model", parts: [{ text: "Understood. I am Prem's digital twin." }] }
+          ];
+          for (const h of chatHistory) {
+            geminiContents.push({
+              role: h.role === "assistant" ? "model" : "user",
+              parts: [{ text: h.content }]
             });
+          }
+          geminiContents.push({ role: "user", parts: [{ text: msg }] });
 
-            const data = await res.json();
-            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                return data.candidates[0].content.parts[0].text;
-            } else if (data.error) {
-                return "AI Error: " + (data.error.message || "Backend connection issue.");
-            }
-            return "The digital twin is currently recharging (Empty response). Try again!";
+          const res = await fetch(geminiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: geminiContents,
+              generationConfig: { temperature: 0.7, maxOutputTokens: 300 }
+            })
+          });
+          const data = await res.json();
+          if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            return data.candidates[0].content.parts[0].text;
+          } else if (data.error) {
+            return "Gemini API Error: " + data.error.message;
+          }
+          return "Gemini API failed to respond.";
         }
       } catch (err) {
         console.error(err);
-        return "Connection failed. Note: " + err.message;
+        return "Connection failed. Please ensure LM Studio is running on localhost:1234 or your Gemini key is correct. Note: " + err.message;
       }
     }
 
@@ -1780,33 +1763,10 @@
         if (!el) return;
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.5 && rect.bottom > 0 && s !== lastSection) {
-          lastSection = s; setEmotion('happy'); setTimeout(() => setEmotion('idle'), 1000);
+          lastSection = s; setEmotion('happy'); setTimeout(() => setEmotion('normal'), 1000);
         }
       });
     });
-
-    // CONTACT FORM HANDLER
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-      contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const submitBtn = document.getElementById('submitBtn');
-        const originalText = submitBtn.textContent;
-        
-        submitBtn.textContent = 'Transmitting...';
-        submitBtn.disabled = true;
-        setEmotion('thinking');
-
-        setTimeout(() => {
-          alert("Signal locked. Message transmitted to Prem's databanks! 🚀");
-          contactForm.reset();
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-          setEmotion('happy');
-          setTimeout(() => setEmotion('idle'), 3000);
-        }, 1500);
-      });
-    }
   </script>
 </body>
 
